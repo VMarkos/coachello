@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500"
+   height="500"
+   viewBox="0 0 132.29166 132.29167"
+   version="1.1"
+   id="svg3775"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3772">
+    <rect
+       x="116.89781"
+       y="138.94666"
+       width="393.87775"
+       height="286.2818"
+       id="rect8265" />
+    <marker
+       style="overflow:visible"
+       id="Arrow4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="5"
+       markerHeight="6"
+       viewBox="0 0 5 6"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="m 1,0 -3,3 h -2 l 3,-3 -3,-3 h 2 z"
+         id="path1741" />
+    </marker>
+  </defs>
+  <g
+     id="layer1">
+    <path
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:2.91042;stroke-linecap:round;stroke-dasharray:none;stroke-dashoffset:2.91042;stroke-opacity:1;marker-start:url(#Arrow4)"
+       id="path3853"
+       d="M 28.728101,28.728102 A 52.916668,52.916668 0 0 1 86.396168,17.257209 52.916668,52.916668 0 0 1 119.0625,66.145836" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-17.98243,-0.44759148)"
+       id="text8263"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192px;line-height:1.25;font-family:'Linux Libertine Mono O';-inkscape-font-specification:'Linux Libertine Mono O';font-variant-ligatures:none;text-align:center;white-space:pre;shape-inside:url(#rect8265);display:inline"
+       x="105.79194"
+       y="0"><tspan
+         x="129.51709"
+         y="313.51569"
+         id="tspan10287">180</tspan></text>
+  </g>
+</svg>

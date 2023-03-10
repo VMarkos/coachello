@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="./css/othello.css" media="screen"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+        </link>
+
+        <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js">
+        </script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+        <script type="text/javascript" src="./prudens_web/parsers.js"></script>
+        <script type="text/javascript" src="./prudens_web/prudens.js"></script>
+        <script type="text/javascript" src="./prudens_web/prudensUtils.js"></script>
+        <script type="text/javascript" src="./scripts/othello.js"></script>
+        <script type="text/javascript" src="./scripts/coachello.js"></script>
+        <script type="text/javascript" src="./scripts/utils.js"></script>
+        <script type="text/javascript" src="./scripts/patterns.js"></script>
+        <!-- <script type="text/javascript" src="./scripts/tour.js"></script> -->
+        <title>
+            Coachello
+        </title>
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    </head>
+    <body>
+        <div id="body-container" class="center-board-container">
+            <div id="game-container" class="game-container">
+                <div id="score-board" class="othello-score-board-container">
+                    <div class="othello-point-container">
+                        <div class="othello-point-color black"></div>
+                        <div id="blacks" class="othello-score-text-container">2</div>
+                    </div>
+                    <div class="othello-point-container">
+                        <div class="othello-point-color white"></div>
+                        <div id="whites" class="othello-score-text-container">2</div>
+                    </div>
+                </div>
+                <div id="board-container" class="othello-board-container">
+                    
+                </div>
+            </div>
+            <div id="right-menu-container" class="explanation-container">
+                <div id="init-buttons-container" class="init-buttons-container">
+                    <div id="play-button" class="init-button play">Play</div>
+                    <div id="audit-button" class="init-button audit">Audit</div>
+                </div>
+            </div>
+            <!-- <div id="info-container" class="footer-container"> -->
+                <!-- <div class="tour-container" onclick="startTour()">
+                    Take a Tour!
+                </div> -->
+                <!-- <div id="help-container" class="help-container">
+                    <a href="https://en.wikipedia.org/wiki/Reversi" target="_blank"><i class="fa fa-info-circle fa-2x"></i></a>
+                </div> -->
+            <!-- </div> -->
+            <div id="help-container" class="help-container">
+                <a href="https://en.wikipedia.org/wiki/Reversi" target="_blank"><i class="fa fa-info-circle fa-2x"></i></a>
+            </div>
+        </div>
+    </body>
+</html>
