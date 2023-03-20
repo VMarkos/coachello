@@ -559,8 +559,8 @@ li.literal + li.literal {
     left: 0;
     width: 42px;
     height: 42px;
-    border: solid 4px rgba(190, 95, 30, 1);
-    transition-duration: 200ms;
+    /* border: solid 4px rgba(190, 95, 30, 1); */
+    /* transition-duration: 200ms; */
     /* transition: z-index 200ms linear 200ms; */
 }
 
@@ -571,7 +571,7 @@ li.literal + li.literal {
     width: 42px;
     height: 42px;
     border: solid 4px rgba(16, 40, 150);
-    transition-duration: 200ms;
+    /* transition-duration: 200ms; */
 }
 
 .head-cell-explanation.contrastive {
@@ -1279,7 +1279,8 @@ li.literal + li.literal {
     background-repeat: repeat;
 }
 
-.flash {
-    transform: scale(1.2);
-    z-index: 110;
+.body-cell-explanation.flash {
+    border: solid 4px rgba(190, 95, 30, 1);
+    /* transform: scale(1.2);
+    z-index: 110; */
 }
