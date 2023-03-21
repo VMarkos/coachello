@@ -400,6 +400,7 @@ function updateGameHistory(row, col, color) {
 function makeSingleMove(row, col, color = -1) {
     savedSession = false;
     CURRENT_PLAYER = (color + 1) / 2;
+    console.log("CP (makeSingleMove):", CURRENT_PLAYER);
     // console.log("makeSingleMove:", CURRENT_PLAYER, PLAYING);
     // console.trace();
     if (!PLAYING) {
@@ -554,7 +555,7 @@ function makeDoubleMove(row, col, color = -1) { // FIXME When the human player h
         return;
     }
     if (LEGAL_MOVES.length > 0) {
-        // console.log("Second iteration with LM");
+        console.log("Second iteration with LM");
         const timeOut = color === 1 ? BLACK_TIMEOUT : WHITE_TIMEOUT;
         setTimeout(() => {
             const move = prudensMove((-1) * color);
@@ -606,7 +607,12 @@ function previousMove(casualCall = true, skipPending = false) {
     //     pauseGame();
     // }
     // console.log("Prev:", currentMove);
-    CURRENT_PLAYER = currentMove % 2;
+    if (!casualCall && skipPending) {
+        CURRENT_PLAYER = 1 - (currentMove % 2);
+    } else {
+        CURRENT_PLAYER = currentMove % 2;
+    }
+    console.log("CP (previousMove):", CURRENT_PLAYER);
     if (!canMoveForward) {
         canMoveForward = true;
         const stepForward = document.getElementById("step-forward");
@@ -762,7 +768,12 @@ function nextMove(casualCall = true, skipPending = false) {
     //     pauseGame();
     // }
     // console.log(currentMove);
-    CURRENT_PLAYER = 1 - (currentMove % 2);
+    if (!casualCall && skipPending) {
+        CURRENT_PLAYER = currentMove % 2;
+    } else {
+        CURRENT_PLAYER = 1 - (currentMove % 2);
+    }
+    console.log("CP (nextMove):", CURRENT_PLAYER);
     // console.log("cmb:", canMoveBackward);
     if (!canMoveBackward) {
         canMoveBackward = true;
@@ -967,8 +978,9 @@ function goToPendingMove(event) {
     emptyDot.classList.add("fa-dot-circle-o");
     const moveNumber = parseInt(targetSpan.getAttribute("data-move-number"));
     // Act-deact advise button.
-    // console.log("mn:", moveNumber);
+    console.log("mn:", moveNumber);
     CURRENT_PLAYER = moveNumber % 2;
+    console.log("CP:", CURRENT_PLAYER);
     if ((CURRENT_PLAYER === 0 && WHITE === 1) || (CURRENT_PLAYER === 1 && BLACK === 1)) {
         enableAdviseButton();
     } else {
@@ -991,7 +1003,7 @@ function goToPendingMove(event) {
         highlightPendingCell(event, toBeFlipped);
         EXPLANATION = CURRENT_GAME[moveNumber - 1]["explanation"];
         CONTRASTIVE_EXPLANATIONS = CURRENT_GAME[moveNumber - 1]["contrastiveExplanation"];
-        console.log("EXPLAINING (in highligh listener)");
+        console.log("EXPLAINING (in highlight listener)");
         console.log("Contrastive:", CONTRASTIVE_EXPLANATIONS);
         console.log("CASUAL:", EXPLANATION);
         explain();
@@ -1090,13 +1102,14 @@ function prudensMove(color = 1) { // Infers all legible moves according to the p
     }
 	const outObj = otDeduce();
     const output = outObj["output"];
+    console.log(outObj);
     if (!output) {
         return randomMove(color);
     }
     const inferences = outObj["inferences"].split(/\s*;\s*/).filter(Boolean);
 	const suggestedMoves = [], avoidedMoves = [], avoidedLiterals = [];
     let avoidSplit;
-	// console.log("inferences:", inferences);
+	console.log("inferences:", inferences);
 	for (const literal of inferences) {
         // console.log(literal.trim().substring(0, 5));
 		if (literal.trim().substring(0, 5) === "move(") {
@@ -1234,8 +1247,8 @@ function explain(explanation = EXPLANATION, contrastive = false) {
         bodyCell.append(bodyBorder);
         // Is this correct?
         updateConExpGroups(groupIndex, bodyBorder.id);
-        bodyCell.addEventListener("mouseover", groupFlashOn, false);
-        bodyCell.addEventListener("mouseout", groupFlashOff, false);
+        // bodyCell.addEventListener("mouseover", groupFlashOn, false);
+        // bodyCell.addEventListener("mouseout", groupFlashOff, false);
     }
     cellId = "oc-" + explanation.head[0] + "-" + explanation.head[1];
     EXPLANATION_BORDERS.push(cellId);
@@ -1263,6 +1276,9 @@ function updateConExpGroups(index, id) {
 
 function groupFlashOn(event) {
     // console.log(event.target);
+    if (COACHING) {
+        return;
+    }
     const id = event.target.parentElement.lastChild.id;
     const group = CON_EXP_GROUPS["groups"][CON_EXP_GROUPS["indices"][id]];
     let item;
@@ -1273,6 +1289,9 @@ function groupFlashOn(event) {
 }
 
 function groupFlashOff(event) {
+    if (COACHING) {
+        return;
+    }
     const id = event.target.parentElement.lastChild.id;
     const group = CON_EXP_GROUPS["groups"][CON_EXP_GROUPS["indices"][id]];
     let item;

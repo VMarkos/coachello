@@ -10,6 +10,8 @@ let hasProvidedAdvice = false;
 
 let pRow, pCol;
 
+let COACHING = false;
+
 const LABELS = {
     border: {
         labels: ["...a border cell.", "...just an empty cell.", "...this border cell", "...this empty cell."],
@@ -88,6 +90,7 @@ function provideAdvice() {
 }
 
 function addPattern() {
+    COACHING = true;
     const rightContainer = document.getElementById("right-menu-container");
     const patternAreaContainer = document.createElement("div");
     patternAreaContainer.classList.add("pattern-area-container");
@@ -349,7 +352,10 @@ function updatePolicy() {
     }
     // console.log("pupdate:", RULE_MAP);
     // console.log("update time:", CURRENT_PLAYER);
+    console.trace();
+    console.log(CURRENT_PLAYER);
     coachedPolicyStrings[CURRENT_PLAYER] += policyString;
+    console.log(coachedPolicyStrings);
 }
 
 function removeHighlights() {
@@ -481,6 +487,7 @@ function existsValidPattern() {
 }
 
 function doneWithPattern() {
+    COACHING = false;
     removePatternCells();
     removeHighlights();
     // if (EXPLANATION["flipped"] && !alreadyFlipped) {
