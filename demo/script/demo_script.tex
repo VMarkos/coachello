@@ -172,14 +172,14 @@
 	%
 	\begin{enumerate}
 		\item Open the online GUI, available at: \href{https://vmarkos.github.io/coachello/}{\texttt{https://vmarkos.github.io/coachello/}}.
-		\item Press the ``Audit'' button and load the game found in:  \href{../games/hp_36_27_1679383735888.json}{\texttt{hp\textunderscore 36\textunderscore 27\textunderscore 1679383735888.json}}.
+		\item Press the ``Audit'' button and load the game found in:  \href{../games/hp_47_17_1679552346213.json}{\texttt{hp\textunderscore 47\textunderscore 17\textunderscore 1679552346213.json}}.
 	\end{enumerate}
 	\begin{minipage}[c]{0.6\textwidth}
 		\begin{enumerate}
 			\setcounter{enumi}{2}
-			\item Press the white dot (intermediate state) on the fourth row, right before white's move C5.			
+			\item Press the white dot (intermediate state) on the third row, right before white's move C5.			
 			\item At this point, we would like the agent to have played to the available side cell at A4, so the next step is to press the ``Offer advice'' button.
-			\item Offer the advice shown in Figure~\ref{fig:101}, by double-clicking on A4 and making a single click on the cell on its right.
+			\item Offer the advice shown in Figure~\ref{fig:101}, by double-clicking on D8 and making a single click on the cell below it.
 			\item Click the ``Done'' button on the bottom right of the screen to return to the game screen.
 			\item Press the white download button to (demonstrate how to) download the coached policy, as shown in Figure~\ref{fig:102}.
 		\end{enumerate}
@@ -203,28 +203,42 @@
 	\subsection{Second Round: Don't Play Next to Corners}\label{subsec:Round Two}
 	%
 	\begin{enumerate}
-		\item Load the following game in audit mode: \href{../games/hp_48_16_1679385730343.json}{\texttt{hp\textunderscore 48\textunderscore 16\textunderscore 1679385730343.json}}.
-		\item Go to the intermediate state before white's move F8 (3\textsuperscript{rd} row, white dot).
-		\item There you shall now see that there is a blue border around the played move. Hover over that cell to show the explanation's body, which corresponds to (a rotated version of) the advice we provided before\footnote{Depending on the audience and time available, one could present other white moves to some side of the board such as H8 (line 8) which is also a corner move.}.
-		\item Scroll down to move B1, and click again on the corresponding intermediate state (white dot before B1). Then, as expected, there will appear a blue border around B1. Again, hovering over that cell will present the rule's body (i.e., the explanation's body).
-		\item At this point, we would like to offer some advice regarding avoiding to play next to corners. To do so, press again the ``Offer advice'' button and provide the piece of advice shown on Figure~\ref{fig:201a}. After providing the first piece of advice, press the ``Advise'' button and not the ``Done'' button, since we want to provide a second pattern\footnote{At this point we could probably make a point about how using the auxiliary border cells corresponds, essentially, to using Cartesian coordinates over the board.}.
+		\item Load the following game in audit mode: \href{../games/hp_50_14_1679553207662.json}{\texttt{hp\textunderscore 50\textunderscore 14\textunderscore 1679553207662.json}}.
+		\item At first, go to the intermediate state before H5 (5\textsuperscript{th} row, white dot) to showcase how the agent, when it has more than two suggested moves to play, chooses at random --- see Figure~\ref{fig:201a}.
+		\item Go to the intermediate state before white's move H7 (6\textsuperscript{th} row, white dot) --- Figure~\ref{fig:201b}.
+		\item There you shall now see that there is a blue border around the played move. Hover over that cell to show the explanation's body, which corresponds to (a rotated version of) the advice we provided before\footnote{Depending on the audience and time available, one could present other white moves to some side of the board such as G8 (line 16) which is also a corner move.}.
+		\item At this point, we would like to offer some advice regarding avoiding to play next to corners. To do so, press again the ``Offer advice'' button and provide the piece of advice shown on Figure~\ref{fig:201c}. After providing the first piece of advice, press the ``Advise'' button and not the ``Done'' button, since we want to provide a second pattern\footnote{At this point we could probably make a point about how using the auxiliary border cells corresponds, essentially, to using Cartesian coordinates over the board.}.
+		\item Then, provide the second piece of advice, as shown in Figure~\ref{fig:201d}.
 		\item Once done, press the ``Done'' button and download again the coached policy\footnote{As with the first game, we are downloading each coached policy just to showcase the corresponding functionality. In practice, each version of the coached policy is embedded into each save game file.}.
 	\end{enumerate}
 
 	\begin{figure}[!htb]
-		\centering\hfill
-		\begin{subfigure}{0.48\textwidth}
+		\centering
+		\begin{subfigure}[t]{0.48\textwidth}
+			\centering
+			\includegraphics[width = \textwidth]{../assets/coaching_success_001.png}
+			\caption{When having to choose between more than two ``good'' moves, the machine chooses at random among them.}
+			\label{fig:201a}
+		\end{subfigure}\hfill
+		\begin{subfigure}[t]{0.48\textwidth}
+			\centering
+			\includegraphics[width = \textwidth]{../assets/coaching_failure_001.png}
+			\caption{The machine plays according to our previous advice, but, now, we would like to avoid playing to that side cell.}
+			\label{fig:201b}
+		\end{subfigure}\\
+		\vspace{2\topsep}
+		\begin{subfigure}[t]{0.48\textwidth}
 			\centering
 			\includegraphics[width = \textwidth]{../assets/advice_002.png}
 			\caption{Instructing Prudens not to play next to corner cells (sides).}
-			\label{fig:201a}
+			\label{fig:201c}
 		\end{subfigure}\hfill
-		\begin{subfigure}{0.48\textwidth}
+		\begin{subfigure}[t]{0.48\textwidth}
 			\centering
-			\includegraphics[width = \textwidth]{../assets/advice_002.png}
+			\includegraphics[width = \textwidth]{../assets/advice_003.png}
 			\caption{Instructing Prudens not to play next to corner cells (diagonals).}
-			\label{fig:201b}
-		\end{subfigure}\hfill
+			\label{fig:201d}
+		\end{subfigure}
 		\caption{The next two pieces of advice that intend to prohibit the machine from playing next to corners.}
 		\label{fig:201}
 	\end{figure}
@@ -233,10 +247,17 @@
 	%
 	\subsection{Third Round: Showcasing Overall Behavior}\label{subsec:Third Round}
 	%
-	\begin{enumerate}
-		\item Load the following game in audit mode: \href{../games/hp_50_14_1679394899001.json}{\texttt{hp\textunderscore 50\textunderscore 14\textunderscore 1679394899001.json}}.
-		\item Move to the intermediate state (white dot) before whites move to G6 (3\textsuperscript{rd} row). There, we can observe how the machine avoid to play to H2 (you can hover over H2 to see the explanation).
-		\item Then, click on the intermediate state before the next white's move (H4). There we can observe how the machine avoids to play at H2 while at the same time it prefers to play at H4.
-		\item Then, you may also click on the intermediate state before white's move to H2 (12\textsuperscript{th} row) to demonstrate a case where all remaining moves are not suggested. In that case, as discussed, the machine plays at random.
-	\end{enumerate}
+	\begin{minipage}{0.60\textwidth}
+		\begin{enumerate}
+			\item Load the following game in audit mode: \href{../games/hp_10_54_1679554654733.json}{\texttt{hp\textunderscore 10\textunderscore 54\textunderscore 1679554654733.json}}.
+			\item Move to the intermediate state (white dot) before whites move to F4 (2\textsuperscript{nd} row). There, we can observe how the machine avoid to play to G7 (you can hover over G7 to see the explanation).
+			\item Then, click on the intermediate state before the white's move to H5 (6\textsubscript{th} row, white dot). There we can observe how the machine avoids to play at several ``bad'' positions while it chooses at random among the suggested ones --- see Figure~\ref{fig:301}.
+			\item Then, you may also click on the intermediate state before white's move to B2 (26\textsuperscript{th} row) to demonstrate a case where all remaining moves are not suggested. In that case, as discussed, the machine plays at random.
+		\end{enumerate}
+	\end{minipage}\hfill
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width = \textwidth]{../assets/coaching_success_002.png}
+		\captionof{figure}{Choosing at random among any ``good'' moves while avoiding ``bad'' ones.}
+		\label{fig:301}
+	\end{minipage}
 \end{document}
