@@ -623,9 +623,11 @@ li.literal + li.literal {
 .game-load-container {
     position: relative;
     padding: 5px;
-    border-radius: 2px;
+    border-radius: 5px;
     transition-duration: 200ms;
     cursor: pointer;
+    box-shadow: 0px 1px 2px 0px var(--secondary-shadow-color);
+    background-color: var(--main-highlight-color-light);
 }
 
 .game-load-container.inactive {
@@ -922,6 +924,8 @@ li.literal + li.literal {
     display: flex;
 	border-radius: 5px;
     gap: 5px;
+    /* background-color: var(--tertiary-background-color-dark); */
+    /* backdrop-filter: brightness(90%); */
 }
 
 .policy-upload-button.inactive {

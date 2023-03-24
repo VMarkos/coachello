@@ -629,13 +629,15 @@ function previousMove(casualCall = true, skipPending = false) {
     }
     if (!skipPending && !fromPending && currentMove !== 0) {
         fromPending = true;
+        console.log("Goes BACK to pending move!");
         goToPendingMove(currentMove);
         return true;
     }
+    currentMove--;
+    fromPending = false;
     if (casualCall) {
         disableAdviseButton();
     }
-    fromPending = false;
     const lastDot = document.getElementById("last-dot");
     // console.log("608:", lastDot, highlightedCell);
     if (lastDot && casualCall && highlightedCell !== "") {
@@ -645,7 +647,6 @@ function previousMove(casualCall = true, skipPending = false) {
         document.getElementById(highlightedCell).classList.remove("highlighted");
         highlightedCell = "";
     }
-    currentMove--;
     removeExplanationBorders();
     if (casualCall) {
         updateMoveSpan(1);
@@ -1007,7 +1008,7 @@ function goToPendingMove(event) {
         // EXPLANATION = CURRENT_GAME[moveNumber - 1]["explanation"];
         EXPLANATIONS = CURRENT_GAME[moveNumber - 1]["explanation"];
         CONTRASTIVE_EXPLANATIONS = CURRENT_GAME[moveNumber - 1]["contrastiveExplanation"];
-        // console.log("EXPLAINING (in highlight listener)");
+        console.log("EXPLAINING (in highlight listener)");
         // console.log("Contrastive:", CONTRASTIVE_EXPLANATIONS);
         // console.log("CASUAL:", EXPLANATION);
         for (const explanation of EXPLANATIONS) {
@@ -1858,7 +1859,7 @@ function parseDate(date) {
     ms.classList.add("ms-container");
     ms.innerText = digitize(date.getMilliseconds(), 3);
     const dateContainer = document.createElement("span");
-    dateContainer.append(date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear() + ", " + digitize(date.getHours()) + ":" + digitize(date.getMinutes()) + ":" + digitize(date.getSeconds()) + ":");
+    dateContainer.append(date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear() + ", " + digitize(date.getHours()) + ":" + digitize(date.getMinutes()) + ":" + digitize(date.getSeconds()) + ".");
     dateContainer.append(ms);
     return dateContainer;
 }
