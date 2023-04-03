@@ -48,6 +48,8 @@ let canMoveForward = false, canMoveBackward = false;
 let highlightedCell = "";
 let fromPending = false;
 
+let direction = 0; // 1 = forward, -1 = backward, 0 = init.
+
 const highlightEvent = new Event("highlight");
 
 const PLAYER_OPTIONS = ["Human", "Prudens"];
@@ -609,6 +611,7 @@ function previousMove(casualCall = true, skipPending = false) {
     //     pauseGame();
     // }
     // console.log("Prev:", currentMove);
+    direction = -1;
     if (!casualCall && skipPending) {
         CURRENT_PLAYER = 1 - (currentMove % 2);
     } else {
@@ -627,9 +630,10 @@ function previousMove(casualCall = true, skipPending = false) {
         // playPause.classList.remove("inactive");
         // playPause.addEventListener("click", autoplay, false);
     }
+    // console.log("skipPending:", skipPending, "fromPending:", fromPending, "cm:", currentMove);
     if (!skipPending && !fromPending && currentMove !== 0) {
         fromPending = true;
-        console.log("Goes BACK to pending move!");
+        // console.log("Goes BACK to pending move!");
         goToPendingMove(currentMove);
         return true;
     }
@@ -641,11 +645,7 @@ function previousMove(casualCall = true, skipPending = false) {
     const lastDot = document.getElementById("last-dot");
     // console.log("608:", lastDot, highlightedCell);
     if (lastDot && casualCall && highlightedCell !== "") {
-        lastDot.id = "";
-        lastDot.classList.remove("fa-dot-circle-o");
-        lastDot.classList.add("fa-circle-o");
-        document.getElementById(highlightedCell).classList.remove("highlighted");
-        highlightedCell = "";
+        updateLastDot(lastDot);
     }
     removeExplanationBorders();
     if (casualCall) {
@@ -659,6 +659,7 @@ function previousMove(casualCall = true, skipPending = false) {
     BOARD = thisMove["board"];
     drawBoard(thisMove["board"]);
     eraseLegalMoves();
+    // console.log("drawing legal moves");
     drawLegalMoves(color, false, thisMove["legalMoves"]);
     updateScore(color, ...countStones(thisMove["board"]));
     if (currentMove === 0) {
@@ -729,10 +730,11 @@ function backwardFast(existsPreviousMove = true, moveCount = CURRENT_GAME.length
     // if (!PAUSED) {
     //     pauseGame();
     // }
+    // console.log("backward-fast");
     if (existsPreviousMove && moveCount > 0) {
         existsPreviousMove = previousMove(casualCall, skipPending);
-        moveCount--
-        setTimeout(() => {backwardFast(existsPreviousMove, moveCount, cell, casualCall, skipPending);}, 50);
+        moveCount--;
+        setTimeout(() => { backwardFast(existsPreviousMove, moveCount, cell, casualCall, skipPending); }, 50);
     }
     if (!existsPreviousMove) {
         const fastBackward = document.getElementById("fast-backward");
@@ -771,6 +773,7 @@ function nextMove(casualCall = true, skipPending = false) {
     //     pauseGame();
     // }
     // console.log(currentMove);
+    direction = 1;
     if (!casualCall && skipPending) {
         CURRENT_PLAYER = currentMove % 2;
     } else {
@@ -798,11 +801,7 @@ function nextMove(casualCall = true, skipPending = false) {
     fromPending = false;
     const lastDot = document.getElementById("last-dot");
     if (lastDot && casualCall && highlightedCell !== "") {
-        lastDot.id = "";
-        lastDot.classList.remove("fa-dot-circle-o");
-        lastDot.classList.add("fa-circle-o");
-        document.getElementById(highlightedCell).classList.remove("highlighted");
-        highlightedCell = "";
+        updateLastDot(lastDot);
     }
     removeExplanationBorders();
     currentMove++;
@@ -859,10 +858,19 @@ function nextMove(casualCall = true, skipPending = false) {
     return value;
 }
 
+function updateLastDot(lastDot) {
+    lastDot.id = "";
+    lastDot.classList.remove("fa-dot-circle-o");
+    lastDot.classList.add("fa-circle-o");
+    document.getElementById(highlightedCell).classList.remove("highlighted");
+    highlightedCell = "";
+}
+
 function forwardFast(existsNextMove = true, moveCount = CURRENT_GAME.length * 2, cell = undefined, casualCall = true, skipPending = false) {
     // if (!PAUSED) {
     //     pauseGame();
     // }
+    // console.log("forward-fast");
     if (existsNextMove && moveCount > 0) {
         existsNextMove = nextMove(casualCall, skipPending);
         moveCount--;
@@ -952,9 +960,15 @@ function goToPendingMove(event) {
     // }
     let targetSpan, prevMoveSpan;
     if (typeof event === "number") {
+        // console.log("number");
         targetSpan = document.getElementById("pending-" + event);
-        prevMoveSpan = document.getElementById("actual-" + (event - 1));
+        if (direction === -1) {
+            prevMoveSpan = document.getElementById("actual-" + event);
+        } else {
+            prevMoveSpan = document.getElementById("actual-" + (event - 1));
+        }
     } else {
+        // console.log("event");
         targetSpan = event.currentTarget;
         prevMoveSpan = document.getElementsByClassName("last-move-span")[0];
     }
@@ -967,8 +981,20 @@ function goToPendingMove(event) {
     if (highlightedCell) {
         document.getElementById(highlightedCell).classList.remove("highlighted");
     }
+    // console.log("prevMove:", prevMoveSpan);
     if (prevMoveSpan) {
         prevMoveSpan.classList.remove("last-move-span");
+    }
+    const moveNumber = parseInt(targetSpan.getAttribute("data-move-number"));
+    // console.log("toPending", currentMove);
+    if (typeof event === "number") {
+        // console.log("overdraw");
+        BOARD = CURRENT_GAME[moveNumber - 1]["board"];
+        drawBoard(CURRENT_GAME[moveNumber - 1]["board"]);
+        eraseLegalMoves();
+        // console.log("drawing legal moves");
+        drawLegalMoves(1, false, CURRENT_GAME[moveNumber - 1]["legalMoves"]);
+        updateScore(1, ...countStones(CURRENT_GAME[moveNumber - 1]["board"]));
     }
     const emptyDot = targetSpan.firstChild;
     const lastDot = document.getElementById("last-dot");
@@ -980,7 +1006,6 @@ function goToPendingMove(event) {
     emptyDot.id = "last-dot";
     emptyDot.classList.remove("fa-circle-o");
     emptyDot.classList.add("fa-dot-circle-o");
-    const moveNumber = parseInt(targetSpan.getAttribute("data-move-number"));
     // Act-deact advise button.
     // console.log("mn:", moveNumber);
     CURRENT_PLAYER = moveNumber % 2;
@@ -1008,7 +1033,7 @@ function goToPendingMove(event) {
         // EXPLANATION = CURRENT_GAME[moveNumber - 1]["explanation"];
         EXPLANATIONS = CURRENT_GAME[moveNumber - 1]["explanation"];
         CONTRASTIVE_EXPLANATIONS = CURRENT_GAME[moveNumber - 1]["contrastiveExplanation"];
-        console.log("EXPLAINING (in highlight listener)");
+        // console.log("EXPLAINING (in highlight listener)");
         // console.log("Contrastive:", CONTRASTIVE_EXPLANATIONS);
         // console.log("CASUAL:", EXPLANATION);
         for (const explanation of EXPLANATIONS) {
@@ -1017,13 +1042,19 @@ function goToPendingMove(event) {
         explainByContrast();
     }, false);
     removeLastDot = false;
-    if (moveNumber < currentMoveNumber) {
+    // console.log("mn - cmn:", moveNumber, currentMoveNumber);
+    let fixStep = 1;
+    if ((moveNumber <= currentMoveNumber)) {
         // console.log("BF here");
-        backwardFast(true, (currentMoveNumber - moveNumber + 1), cell, false, true);
+        if (moveNumber === currentMoveNumber && fromPending) {
+            fixStep = 0;
+        }
+        backwardFast(true, (currentMoveNumber - moveNumber + fixStep), cell, false, true);
     } else if (moveNumber > currentMoveNumber) {
         // console.log("FF here", moveNumber, currentMoveNumber);
         forwardFast(true, (moveNumber - currentMoveNumber - 1), cell, false, true);
     }
+    // fromPending = false;
 }
 
 function highlightPendingCell(event, toBeFlipped) {
@@ -1139,7 +1170,6 @@ function prudensMove(color = 1) { // Infers all legible moves according to the p
         }
 	}
     // console.log("moveLiteral:", moveLiteral);
-    // TODO A for loop that updates all explanations in the EXPLANATION array.
     let move, explanation, coords, row, col, cellId;
     EXPLANATIONS = [];
     for (let i = 0; i < suggestedMoves.length; i++) {
