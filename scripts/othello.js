@@ -112,6 +112,7 @@ function initializeBoard(withLegalMoves = true) {
     let othelloCell, borderCell;
     boardContainer.style.gridTemplateColumns = "repeat(" + (N_COLS + 2) + ", 1fr)";
     BOARD = new Array(N_ROWS);
+    let columnName, rowName, nameContainer;
     for (let i = -1; i < N_ROWS + 1; i++) {
         if (i > -1 && i < N_ROWS) {
             BOARD[i] = [];
@@ -127,6 +128,25 @@ function initializeBoard(withLegalMoves = true) {
                 othelloCell = document.createElement("div");
                 othelloCell.classList.add("othello-cell");
                 othelloCell.id = "oc-" + i + "-" + j;
+                if (i === 0 || j === 0) {
+                    nameContainer = document.createElement("div");
+                    nameContainer.classList.add("othello-cell-names-container");
+                    if (i === 0) {
+                        columnName = document.createElement("div");
+                        // columnName.classList.add("othello-cell-column-name");
+                        columnName.innerText = colName(j);
+                        nameContainer.append(columnName);
+                    }
+                    if (j === 0) {
+                        rowName = document.createElement("div");
+                        if (i !== 0) {
+                            nameContainer.classList.add("othello-cell-row-name");
+                        }
+                        rowName.innerText = "" + (i + 1);
+                        nameContainer.append(rowName);
+                    }
+                    othelloCell.append(nameContainer);
+                }
                 boardContainer.append(othelloCell);
             }
         }
@@ -136,6 +156,10 @@ function initializeBoard(withLegalMoves = true) {
         calculateLegalMoves();
         drawLegalMoves();
     }
+}
+
+function colName(j) {
+    return String.fromCharCode("A".charCodeAt(0) + j);
 }
 
 function drawBoard(board) {
@@ -246,7 +270,9 @@ function eraseLegalMoves() {
         if (document.getElementById(cellId + "-blocker")) {
             document.getElementById(cellId + "-blocker").remove();
         }
-        while (cellContainer.firstChild) {
+        // while (cellContainer.firstChild) {
+        if (cellContainer.firstChild) {
+            console.log(cellContainer);
             cellContainer.removeChild(cellContainer.lastChild);
         }
     }
@@ -265,7 +291,7 @@ function flipPieces(cellIds = undefined) {
     // console.log("inFlip:", cellIds);
     for (const cellId of cellIds) {
         if (ANIMATED) {
-            currentPiece = document.getElementById(cellId).firstChild;
+            currentPiece = document.getElementById(cellId).lastChild;
         }
         coords = cellId.split("-");
         row = coords[1];
