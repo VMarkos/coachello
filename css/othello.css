@@ -176,42 +176,6 @@ input[type="checkbox"] {
     padding: 5px;
 }
 
-/* .why-button {
-    position: relative;
-    background-color: tomato;
-    padding: 5px 10px 5px 10px;
-    border-radius: 2px;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.7);
-    width: fit-content;
-    font-size: larger;
-    cursor: pointer;
-    transition-duration: 200ms;
-} */
-
-/* .reset-button {
-    background-color: rgba(176, 64, 190, 1.0);
-    padding: 5px 10px 5px 10px;
-    border-radius: 2px;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.7);
-    width: fit-content;
-    font-size: larger;
-    cursor: pointer;
-    transition-duration: 200ms;
-} */
-
-/* .add-button {
-    position: relative;
-    background-color: rgba(60, 164, 60, 1.0);
-    padding: 5px 10px 5px 10px;
-    border-radius: 2px;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.7);
-    width: fit-content;
-    font-size: larger;
-    cursor: pointer;
-    transition-duration: 200ms;
-    z-index: 7;
-} */
-
 .init-button {
     position: relative;
     padding: 5px 10px 5px 10px;
@@ -230,7 +194,7 @@ input[type="checkbox"] {
 }
 
 .init-button.audit {
-    background-color: var(--main-highlight-color-dark);
+    background-color: var(--main-highlight-color-light);
 }
 
 .init-button.cancel {
@@ -247,6 +211,10 @@ input[type="checkbox"] {
 
 .init-button:not(.inactive):hover, .why-button:not(.inactive):hover, .reset-button:not(.inactive):hover, .add-button:not(.inactive):hover, .upload-button:not(.inactive):hover {
     opacity: 0.9;
+}
+
+.init-button.inactive-mode {
+    background-color: var(--main-highlight-color-dark);
 }
 
 span.why, span.contrastive-literal {

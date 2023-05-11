@@ -1993,8 +1993,12 @@ function removeCM(event) {
 function enterPlayMode(event) {
     // console.log("enterPlayMode");
     // console.trace();
+    const auditButton = document.getElementById("audit-button");
+    const playButton = document.getElementById("play-button");
     if (MODE === -1) {
         MODE = 0;
+        auditButton.classList.toggle("inactive-mode");
+        // playButton.classList.toggle("inactive-mode");
         const initButtonsContainer = document.getElementById("init-buttons-container");
         initButtonsContainer.style.transform = "translate(-50%, 0)";
         initButtonsContainer.style.top = "0";
@@ -2014,6 +2018,8 @@ function enterPlayMode(event) {
             showCM(event);
         } else {
             MODE = 0;
+            auditButton.classList.toggle("inactive-mode");
+            playButton.classList.toggle("inactive-mode");
             resetGame();
             const auditContainer = document.getElementById("audit-container");
             auditContainer.style.top = "-100vh";
@@ -2624,8 +2630,12 @@ function activatePolicyUpload(color) {
 }
 
 function enterAuditMode(event) {
+    const auditButton = document.getElementById("audit-button");
+    const playButton = document.getElementById("play-button");
     if (MODE === -1) {
         MODE = 1;
+        // auditButton.classList.toggle("inactive-mode");
+        playButton.classList.toggle("inactive-mode");
         const initButtonsContainer = document.getElementById("init-buttons-container");
         initButtonsContainer.style.transform = "translate(-50%, 0)";
         initButtonsContainer.style.top = "0";
@@ -2637,6 +2647,8 @@ function enterAuditMode(event) {
             showCM(event);
         } else {
             MODE = 1;
+            auditButton.classList.toggle("inactive-mode");
+            playButton.classList.toggle("inactive-mode");
             // console.log("init?");
             resetGame();
             // initializeBoard();
